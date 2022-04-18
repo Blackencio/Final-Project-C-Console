@@ -1,0 +1,241 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace project
+{
+    class principal
+    {
+        
+        static void Main(string[] args)
+        {
+
+            MenuPrincipal();
+
+            // ignorar los comentarios de abajo xd
+            //el metodo llamado esta declarado mas abajo
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // imprimir texto en consola
+
+            /*long cantidad = texto.Length;
+            Console.WriteLine("cantidad de caracteres: " + cantidad);*/
+
+
+
+            // recorrer un txt leyendo byte por byte utilizando casting con bucle for (forma primitiva)
+            /*for (long i = 0; i < cantidad; i++)
+            {
+                texto.Seek(i, SeekOrigin.Begin);
+                int valor = texto.ReadByte();
+                Console.Write($"{(char)valor}");
+            }*/
+
+
+
+
+
+
+            // recorrer txt leyendo byte por byte utilizando casting con bucle while (forma primitiva)
+            /*int valor = 0;
+            while (valor != -1)
+            {
+                valor = texto.ReadByte();
+                if (valor != -1)
+                {
+                    Console.Write($"{(char)valor}");
+                }
+
+
+            }*/
+
+
+
+
+
+
+
+            //Lectura de un txt utilizando la clase StreamReader y bucle while
+
+            /*StreamReader lectura = new StreamReader(texto);
+
+            string linea = lectura.ReadLine()!;
+            Console.WriteLine(linea);
+
+            while (lectura.EndOfStream)
+            {
+                Console.WriteLine(lectura.ReadLine()!);
+            }*/
+
+
+
+
+
+
+
+
+
+            //lectura de un txt completo
+            /*StreamReader lectura = new StreamReader(texto);
+            string todo = lectura.ReadToEnd();
+            Console.WriteLine(todo);*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //cerrar stream de datos
+            /*texto.Close();*/
+            Console.ReadKey(); 
+        }
+
+
+        //este es el menu principal
+        static void MenuPrincipal()
+        {
+            int input;
+            Console.WriteLine("Agenda Electronica");
+            Console.WriteLine();
+            Console.WriteLine("Seleccione el numero de la consulta");
+            Console.WriteLine("1. Contactos");
+            Console.WriteLine("2. Eventos");
+            Console.WriteLine("3. Utilidades");
+            input = int.Parse(Console.ReadLine()!);
+
+            switch (input)
+            {
+                case 1:
+                    // solamente tengo hecho hasta mostrar contactos, y aun tengo que hacer que devuevla al menu principal despues de terminar una funcion
+                    Console.Clear();
+                    Console.WriteLine("1. Ingresar contacto");
+                    Console.WriteLine("2. Mostrar todos los contactos");
+                    Console.WriteLine("3. Buscar contactos");
+                    Console.WriteLine("4. Eliminar contactos");
+                    input = int.Parse(Console.ReadLine()!);
+
+                    switch (input)
+                    {
+                        case 1: 
+                            // los metodos para ingresar y mostrar contactos estan mas abajo, esos mismos se pueden reutilizar para los eventos, simplemente cambiando los parametros y las variables
+                            Console.Clear();
+                            string nombre;
+                            string apellido;
+                            long tel;
+                            Console.WriteLine("Ingrese el nombre del contacto");
+                            nombre = Console.ReadLine()!;
+                            Console.WriteLine("Ingrese el apellido del contacto");
+                            apellido = Console.ReadLine()!;
+                            Console.WriteLine("Ingrese el telefono del contacto");
+                            tel = long.Parse(Console.ReadLine()!);
+                            ingresar(nombre, apellido, tel);
+                            break;
+
+
+                            case 2:
+                            Console.Clear();
+                            Console.WriteLine();
+                            mostrar();
+                            break;
+
+
+                        default: break;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // metodo para ingresar contactos
+        public static void ingresar(string nombre, string apellido, long tel)
+        {
+            // debe haber un archivo llamado "Info.dat" en la carpeta del ejecutable del programa
+            StreamWriter dat;
+            if (!File.Exists("Info.dat"))// Por si la moca y el archivo no existe
+            {
+                dat = File.CreateText("Info.dat");// se crea el archivo
+                dat.Close();// aqui se cierra la conexion con el archivo
+            }
+            StreamWriter escritura = new StreamWriter("Info.dat", true); 
+            try
+            {
+                escritura.WriteLine("\nNombre del Contacto: " + nombre + "\nApellido : " + apellido + "\nTelefono: " + tel);
+            }
+            catch
+            {
+                Console.WriteLine("Error");
+            }
+            escritura.Close();
+        }
+
+        // metodo para mostrar contactos
+        public static void mostrar()
+        {
+            StreamReader lectura = new StreamReader("Info.dat");
+            string linea;
+            try
+            {
+                linea = lectura.ReadLine()!;
+                while (linea != null)
+                {
+                    Console.WriteLine(linea);
+                    linea = lectura.ReadLine()!;
+                }
+                lectura.Close();
+            }
+            catch
+            {
+                Console.WriteLine("Error");
+            }
+        }
+    }
+
+    class contactos
+    {
+        private static void Contactos()
+        {
+            int inpt;
+            Console.Clear();    
+            Console.WriteLine("Contactos");
+            Console.WriteLine("1. Agregar");
+            Console.WriteLine("2. Editar");
+            Console.WriteLine("3. Borrar");
+            inpt = int.Parse(Console.ReadLine()!);
+            
+        }
+        private static void Agregar()
+        {
+            
+            Console.WriteLine("Digite el Nombre del contacto");
+
+        }
+    }
+}

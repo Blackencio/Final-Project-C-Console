@@ -1,0 +1,471 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace project
+{
+    class principal
+    {
+        
+        static void Main(string[] args)
+        {
+
+            MenuPrincipal();
+
+         
+            Console.ReadKey();
+        }
+
+
+
+
+
+
+
+
+
+        
+        static void MenuPrincipal()
+        {
+            int input;
+            Console.Clear();
+            Console.WriteLine("Agenda Electronica");
+            Console.WriteLine();
+            Console.WriteLine("Seleccione el numero de la consulta");
+            Console.WriteLine("1. Contactos");
+            Console.WriteLine("2. Eventos");
+            Console.WriteLine("3. Utilidades");
+            input = int.Parse(Console.ReadLine()!);
+
+            switch (input)
+            {
+                case 1:
+                    // solamente tengo hecho hasta mostrar contactos, y aun tengo que hacer que devuevla al menu principal despues de terminar una funcion
+                    Console.Clear();
+                    Console.WriteLine("1. Ingresar contacto");
+                    Console.WriteLine("2. Mostrar todos los contactos");
+                    Console.WriteLine("3. Buscar contactos");
+                    Console.WriteLine("4. Eliminar contactos");
+                    Console.WriteLine("5. Editar contactos");
+                    input = int.Parse(Console.ReadLine()!);
+
+                    switch (input)
+                    {
+                        case 1: 
+                            // los metodos para ingresar y mostrar contactos estan mas abajo, esos mismos se pueden reutilizar para los eventos, simplemente cambiando los parametros y las variables
+                            Console.Clear(); 
+                            
+                            ingresar();
+                            break;
+
+
+                            case 2:
+                            Console.Clear();
+                            Console.WriteLine();
+                            mostrar();
+                            break;
+
+
+
+                            case 3:
+                            Console.Clear();
+                            Console.WriteLine();
+                            buscar();
+                            break;
+
+                            case 4: 
+                            Console.Clear();
+                            eliminar();
+                            break;
+
+                            case 5:
+                            Console.Clear();
+                            editar();
+                            break;
+
+
+                        default: break;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // metodo para ingresar contactos
+        public static void ingresar()
+        {
+
+
+            long contador = 0;
+
+            string[] arraycontac = new string[10000];
+            string nombre, tel, linea, siono, buscar, apellido, direccion, email;
+
+            int i = 0, e = 0;
+
+           
+
+
+
+
+
+
+            // debe haber un archivo llamado "Info.dat" en la carpeta del ejecutable del programa
+            StreamWriter dat;
+            StreamReader lectura;
+            if (!File.Exists("Info.dat"))// Por si la moca y el archivo no existe
+            {
+                dat = File.CreateText("Info.dat");// se crea el archivo
+                dat.Close();// aqui se cierra la conexion con el archivo
+            }
+            else
+            {
+                lectura = File.OpenText("Info.dat");
+
+                do
+                {
+
+                    linea = lectura.ReadLine()!;
+                    arraycontac[i] = linea;
+                    //Console.WriteLine("{0}",arraycontac[i]);
+                    i += 1;
+                    contador += 1;
+
+                }
+                while (linea != null);
+                lectura.Close();
+                contador -= 1;
+                Console.WriteLine("Contacto #{0}", contador);
+                //termina codigo en comun
+            }
+
+            StreamWriter infor;
+            Console.WriteLine("Introduce el nombre del contacto");
+            nombre = Console.ReadLine()!;
+            Console.WriteLine("Introduce el apellido de {0}", nombre);
+            apellido = Console.ReadLine()!;
+            Console.WriteLine("Introduce el telefono de {0}", nombre);
+            tel = Console.ReadLine()!;
+            Console.WriteLine("Introduce la direccion de {0}", nombre);
+            direccion = Console.ReadLine()!;
+            Console.WriteLine("Introduce el email de {0}", nombre);
+            email = Console.ReadLine()!;    
+
+            arraycontac[contador] = nombre + " " + apellido + " " + " " + " " + " " + tel + " " + " " + " " + direccion + " " + " " + " " + email;
+
+            infor = File.AppendText("Info.dat");
+            infor.WriteLine("{0} ", arraycontac[contador]);
+            infor.Close();
+
+            contador += 1;
+
+
+
+            Console.WriteLine("Presione Enter para volver al menu principal");
+            Console.ReadKey();
+            MenuPrincipal();
+        }
+
+        // metodo para mostrar contactos
+        public static void mostrar()
+        {
+            StreamReader lectura = new StreamReader("Info.dat");
+            string linea;
+            try
+            {
+                linea = lectura.ReadLine()!;
+                Console.WriteLine("Nombre:   Apellido:      Tel:      Direccion:                         Email:");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+                while (linea != null)
+                {
+                    Console.WriteLine(linea);
+                    Console.WriteLine();
+                    linea = lectura.ReadLine()!;
+                }
+                lectura.Close();
+            }
+            catch
+            {
+                Console.WriteLine("Error");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Presione Enter para volver al menu principal");
+            Console.ReadKey();  
+            MenuPrincipal();
+        }
+
+        public static void buscar()
+        {
+            long contador = 0;
+
+            string[] arraycontac = new string[10000];
+            string operador, nombre, tel, linea, siono, buscar, apellido;
+
+            int i = 0, e = 0;
+
+
+
+
+
+
+
+
+            // debe haber un archivo llamado "Info.dat" en la carpeta del ejecutable del programa
+            StreamWriter dat;
+            StreamReader lectura;
+            if (!File.Exists("Info.dat"))// Por si la moca y el archivo no existe
+            {
+                dat = File.CreateText("Info.dat");// se crea el archivo
+                dat.Close();// aqui se cierra la conexion con el archivo
+            }
+            else
+            {
+                lectura = File.OpenText("Info.dat");
+
+                do
+                {
+
+                    linea = lectura.ReadLine()!;
+                    arraycontac[i] = linea;
+                    //Console.WriteLine("{0}",arraycontac[i]);
+                    i += 1;
+                    contador += 1;
+
+                }
+                while (linea != null);
+                lectura.Close();
+                contador -= 1;
+                Console.WriteLine("{0}", contador);
+                //termina codigo en comun
+            }
+
+
+            Console.Clear();
+            Console.WriteLine("Introduce un nombre o número de telefono para buscar");
+            buscar = Console.ReadLine()!;
+            Console.Clear();
+            Console.WriteLine("Informacion de contacto: ");
+
+            for (i = 0; i < contador; i++)
+
+                if (arraycontac[i].IndexOf(buscar) >= 0)
+                    
+                    Console.WriteLine("{0}", arraycontac[i]);
+
+
+            Console.WriteLine("Presione Enter para volver al menu principal");
+            Console.ReadLine();
+            MenuPrincipal();
+        }
+
+
+
+
+        public static void eliminar()
+        {
+
+            long contador = 0;
+
+            string[] arraycontac = new string[10000];
+            string operador, nombre, tel, linea, siono, buscar, apellido;
+
+            int i = 0, e = 0;
+
+            // debe haber un archivo llamado "Info.dat" en la carpeta del ejecutable del programa
+            StreamWriter dat;
+            StreamReader lectura;
+            if (!File.Exists("Info.dat"))// Por si la moca y el archivo no existe
+            {
+                dat = File.CreateText("Info.dat");// se crea el archivo
+                dat.Close();// aqui se cierra la conexion con el archivo
+            }
+            else
+            {
+                lectura = File.OpenText("Info.dat");
+
+                do
+                {
+
+                    linea = lectura.ReadLine()!;
+                    arraycontac[i] = linea;
+                    //Console.WriteLine("{0}",arraycontac[i]);
+                    i += 1;
+                    contador += 1;
+
+                }
+                while (linea != null);
+                lectura.Close();
+                contador -= 1;
+                Console.WriteLine("{0}", contador);
+                //termina codigo en comun
+            }
+
+
+            StreamWriter datoss;// Declaramos la Clase para escribir en archivos en la variable datos..
+
+            Console.Clear();
+            Console.WriteLine("Introduce un nombre o número de telefono para eliminar");
+            buscar = Convert.ToString(Console.ReadLine());
+
+            for (i = 0; i < contador; i++)
+            {
+                if (arraycontac[i].IndexOf(buscar) >= 0)
+                {
+                    int s;
+                    for (s = i; s < contador - 1; s++)
+                        arraycontac[s] = arraycontac[s + 1];
+                    contador--;
+                    arraycontac[contador] = "";
+                }
+            }
+            siono = Convert.ToString(Console.ReadLine());
+            dat = File.CreateText("Info.dat");// Creamos el archivo..
+            dat.Close();// Cerramos el archivo..
+
+            for (e = 0; e < contador; e++)
+            {
+                datoss = File.AppendText("Info.dat");// Abrimos para editar el archivo..
+                datoss.WriteLine("{0} ", arraycontac[e]);
+                datoss.Close();
+
+            }
+            Console.WriteLine("Contacto eliminado correctamente");
+            Console.WriteLine();
+            Console.WriteLine("Presione Enter para volver al menu principal");
+            Console.ReadLine();
+            MenuPrincipal();
+
+
+
+        }
+
+        public static void editar()
+        {
+            long contador = 0;
+
+            string[] arraycontac = new string[10000];
+            string operador, nombre, tel, linea, siono, buscar, apellido, direccion, email;
+
+            int i = 0, e = 0;
+
+            // debe haber un archivo llamado "Info.dat" en la carpeta del ejecutable del programa
+            StreamWriter dat;
+            StreamReader lectura;
+            if (!File.Exists("Info.dat"))// Por si la moca y el archivo no existe
+            {
+                dat = File.CreateText("Info.dat");// se crea el archivo
+                dat.Close();// aqui se cierra la conexion con el archivo
+            }
+            else
+            {
+                lectura = File.OpenText("Info.dat");
+
+                do
+                {
+
+                    linea = lectura.ReadLine()!;
+                    arraycontac[i] = linea;
+                    //Console.WriteLine("{0}",arraycontac[i]);
+                    i += 1;
+                    contador += 1;
+
+                }
+                while (linea != null);
+                lectura.Close();
+                contador -= 1;
+                Console.WriteLine("{0}", contador);
+                //termina codigo en comun
+            }
+
+
+
+            StreamWriter datoss;// Declaramos la Clase para escribir en archivos en la variable datos..
+
+            Console.Clear();
+            Console.WriteLine("Introduce un nombre o número de telefono para editar");
+            buscar = Convert.ToString(Console.ReadLine());
+
+            for (i = 0; i < contador; i++)
+            {
+                if (arraycontac[i].IndexOf(buscar) >= 0)
+                {
+                    int s;
+                    for (s = i; s < contador - 1; s++)
+                        arraycontac[s] = arraycontac[s + 1];
+                    contador--;
+                    arraycontac[contador] = "";
+                }
+            }
+            dat = File.CreateText("Info.dat");// Creamos el archivo..
+            dat.Close();// Cerramos el archivo..
+
+            for (e = 0; e < contador; e++)
+            {
+                datoss = File.AppendText("Info.dat");// Abrimos para editar el archivo..
+                datoss.WriteLine("{0} ", arraycontac[e]);
+                datoss.Close();
+
+            }
+
+            StreamWriter infor;
+            Console.WriteLine("Introduce el nombre del contacto");
+            nombre = Console.ReadLine()!;
+            Console.WriteLine("Introduce el apellido de {0}", nombre);
+            apellido = Console.ReadLine()!;
+            Console.WriteLine("Introduce el telefono de {0}", nombre);
+            tel = Console.ReadLine()!;
+            Console.WriteLine("Introduce la direccion de {0}", nombre);
+            direccion = Console.ReadLine()!;
+            Console.WriteLine("Introduce el email de {0}", nombre);
+            email = Console.ReadLine()!;
+
+            arraycontac[contador] = nombre + " " + apellido + " " + " " + " " + " " + tel + " " + " " + " " + direccion + " " + " " + " " + email;
+
+            infor = File.AppendText("Info.dat");
+            infor.WriteLine("{0} ", arraycontac[contador]);
+            infor.Close();
+
+            contador += 1;
+
+
+
+            
+        
+
+
+
+
+
+        Console.WriteLine();
+            Console.WriteLine("Presione Enter para volver al menu principal");
+            Console.ReadLine();
+            MenuPrincipal();
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+   
+}
